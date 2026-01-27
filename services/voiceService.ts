@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, LiveServerMessage, Modality, Type, FunctionDeclaration } from '@google/genai';
 
 // Audio Processing Helpers
@@ -121,7 +120,6 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
         scriptProcessor.onaudioprocess = (e) => {
           const inputData = e.inputBuffer.getChannelData(0);
           const pcmBlob = createBlob(inputData);
-          // CRITICAL: Solely rely on sessionPromise resolves and then call `session.sendRealtimeInput` as per guidelines.
           sessionPromise.then(session => {
             session.sendRealtimeInput({ media: pcmBlob });
           });
@@ -130,7 +128,8 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
         scriptProcessor.connect(inputAudioContext.destination);
       },
       onmessage: async (message: LiveServerMessage) => {
-        const base64Audio = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
+        const parts = message.serverContent?.modelTurn?.parts ?? [];
+        const base64Audio = parts[0]?.inlineData?.data;
         if (base64Audio) {
           nextStartTime = Math.max(nextStartTime, outputAudioContext.currentTime);
           const audioBuffer = await decodeAudioData(decode(base64Audio), outputAudioContext, 24000, 1);
@@ -151,20 +150,19 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
           nextStartTime = 0;
         }
 
-        if (message.toolCall) {
-          for (const fc of message.toolCall.functionCalls) {
-            let result = "ok";
-            if (fc.name === 'navigate_to') {
-              callbacks.onNavigate(fc.args.view as any);
-            } else if (fc.name === 'scroll_to_section') {
-              callbacks.onScroll(fc.args.section as string);
-            }
-            
-            // Fix: sendToolResponse expects functionResponses to be an object (not an array) to inform the model of execution.
-            sessionPromise.then(s => s.sendToolResponse({
-              functionResponses: { id: fc.id, name: fc.name, response: { result: result } }
-            })).catch(console.error);
+        const functionCalls = message.toolCall?.functionCalls ?? [];
+        for (const fc of functionCalls) {
+          let result = "ok";
+          const args = (fc.args ?? {}) as any;
+          if (fc.name === 'navigate_to') {
+            callbacks.onNavigate(args.view as any);
+          } else if (fc.name === 'scroll_to_section') {
+            callbacks.onScroll(args.section as string);
           }
+          
+          sessionPromise.then(s => s.sendToolResponse({
+            functionResponses: { id: fc.id, name: fc.name, response: { result: result } }
+          })).catch(console.error);
         }
       },
       onerror: (e: any) => {

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { blogService } from '../../services/blogService';
 import { BlogPost } from '../../types';
@@ -55,7 +54,8 @@ const BlogAdmin: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         model: 'gemini-2.5-flash-image',
         contents: { parts: [{ text: `High-quality professional editorial photo for PWD empowerment Tanzania: ${imagePrompt}` }] }
       });
-      const part = response.candidates?.[0]?.content?.parts.find(p => p.inlineData);
+      const parts = response.candidates?.[0]?.content?.parts ?? [];
+      const part = parts.find(p => p.inlineData);
       if (part?.inlineData) setGeneratedImageUrl(`data:image/png;base64,${part.inlineData.data}`);
     } catch (e) {
       console.error(e);
