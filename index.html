@@ -11,14 +11,31 @@
     <style>
       :root { --font-scale: 1; }
       html { font-size: calc(16px * var(--font-scale)); scroll-behavior: smooth; }
-      body { font-family: 'Inter', sans-serif; }
+      body { font-family: 'Inter', sans-serif; transition: background 0.3s, color 0.3s; }
       h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
       
-      body.high-contrast { background: black !important; color: white !important; }
-      body.high-contrast * { border-color: white !important; color: white !important; }
-      body.high-contrast .bg-emerald-600 { background: #ffff00 !important; color: black !important; }
+      /* Visual Impairment Specific Contrast (Yellow on Black) */
+      body.high-contrast { background: #000000 !important; color: #ffff00 !important; }
+      body.high-contrast * { border-color: #ffff00 !important; color: #ffff00 !important; background-color: transparent !important; }
+      body.high-contrast button, body.high-contrast .bg-emerald-600 { 
+        border: 2px solid #ffff00 !important; 
+        background: #000000 !important;
+        color: #ffff00 !important;
+      }
+      body.high-contrast img { filter: grayscale(1) contrast(2) !important; opacity: 0.7; }
 
+      /* Braille/Tactile Spacing optimization */
+      body.braille-mode { letter-spacing: 0.15em !important; line-height: 2 !important; }
+      
       body.dyslexia-font { font-family: 'Inter', sans-serif !important; letter-spacing: 0.05em; line-height: 1.8; }
+
+      /* Scaling Helpers */
+      .scale-02 { --font-scale: 0.2; }
+      .scale-05 { --font-scale: 0.5; }
+      .scale-10 { --font-scale: 1.0; }
+      .scale-20 { --font-scale: 2.0; }
+
+      .sr-only-readable { border: 2px solid #34d399; }
     </style>
     <script type="importmap">
 {

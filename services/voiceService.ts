@@ -58,10 +58,7 @@ const navigateToDeclaration: FunctionDeclaration = {
     type: Type.OBJECT,
     description: 'Switch between main app views like home and blog.',
     properties: {
-      view: {
-        type: Type.STRING,
-        description: 'The view to navigate to. Options: "home", "blog".',
-      },
+      view: { type: Type.STRING, description: 'Options: "home", "blog".' },
     },
     required: ['view'],
   },
@@ -73,10 +70,7 @@ const scrollToSectionDeclaration: FunctionDeclaration = {
     type: Type.OBJECT,
     description: 'Scroll to a specific section on the current page.',
     properties: {
-      section: {
-        type: Type.STRING,
-        description: 'The ID of the section to scroll to. Options: "about", "mission-vision", "philosophy", "events", "objectives", "programs", "contact".',
-      },
+      section: { type: Type.STRING, description: 'Options: "about", "mission-vision", "philosophy", "events", "objectives", "programs", "contact".' },
     },
     required: ['section'],
   },
@@ -85,13 +79,14 @@ const scrollToSectionDeclaration: FunctionDeclaration = {
 interface VoiceCallbacks {
   onNavigate: (view: 'home' | 'blog') => void;
   onScroll: (section: string) => void;
+  onTranscription: (text: string) => void;
   onError: (msg: string) => void;
 }
 
 export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
   const apiKey = process.env.API_KEY;
   if (!apiKey) {
-    callbacks.onError("API key is missing. Voice navigation disabled.");
+    callbacks.onError("API key is missing.");
     throw new Error("API key is missing");
   }
 
@@ -106,18 +101,16 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
   const inputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 16000 });
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-  if (inputAudioContext.state === 'suspended') await inputAudioContext.resume();
-  if (outputAudioContext.state === 'suspended') await outputAudioContext.resume();
-
   const sessionPromise = ai.live.connect({
     model: 'gemini-2.5-flash-native-audio-preview-12-2025',
     config: {
       responseModalities: [Modality.AUDIO],
+      outputAudioTranscription: {},
       speechConfig: {
         voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } },
       },
       tools: [{ functionDeclarations: [navigateToDeclaration, scrollToSectionDeclaration] }],
-      systemInstruction: 'You are the voice navigator for "The Invisible Hands" website. Your job is to help people with disabilities navigate the site hands-free. When they ask to see something or go somewhere, use the provided tools. Always give a brief, friendly spoken confirmation of what you are doing.',
+      systemInstruction: 'You are the "Inclusive Eyes" voice assistant for The Invisible Hands. You help users with visual, hearing, or physical impairments. When a user hovers over text or asks for information, read it clearly and then ask a brief, relevant follow-up question to keep them engaged hands-free. Be empathetic and patient.',
     },
     callbacks: {
       onopen: () => {
@@ -126,14 +119,16 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
         scriptProcessor.onaudioprocess = (e) => {
           const inputData = e.inputBuffer.getChannelData(0);
           const pcmBlob = createBlob(inputData);
-          sessionPromise.then(session => {
-            session.sendRealtimeInput({ media: pcmBlob });
-          }).catch(() => {});
+          sessionPromise.then(session => session.sendRealtimeInput({ media: pcmBlob })).catch(() => {});
         };
         source.connect(scriptProcessor);
         scriptProcessor.connect(inputAudioContext.destination);
       },
       onmessage: async (message: LiveServerMessage) => {
+        if (message.serverContent?.outputTranscription) {
+          callbacks.onTranscription(message.serverContent.outputTranscription.text);
+        }
+
         const parts = message.serverContent?.modelTurn?.parts ?? [];
         const base64Audio = parts.find(p => p.inlineData)?.inlineData?.data;
         if (base64Audio) {
@@ -149,44 +144,32 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
         }
 
         if (message.serverContent?.interrupted) {
-          sources.forEach(s => {
-            try { s.stop(); } catch (e) {}
-          });
+          sources.forEach(s => { try { s.stop(); } catch (e) {} });
           sources.clear();
           nextStartTime = 0;
         }
 
         const functionCalls = message.toolCall?.functionCalls ?? [];
         for (const fc of functionCalls) {
-          let result = "ok";
-          const args = (fc.args ?? {}) as any;
-          if (fc.name === 'navigate_to' && args.view) {
-            callbacks.onNavigate(args.view as any);
-          } else if (fc.name === 'scroll_to_section' && args.section) {
-            callbacks.onScroll(args.section as string);
-          }
-          
+          if (fc.name === 'navigate_to') callbacks.onNavigate((fc.args as any).view);
+          if (fc.name === 'scroll_to_section') callbacks.onScroll((fc.args as any).section);
           sessionPromise.then(s => s.sendToolResponse({
-            functionResponses: { id: fc.id, name: fc.name, response: { result: result } }
-          })).catch(console.error);
+            functionResponses: { id: fc.id, name: fc.name, response: { result: "ok" } }
+          }));
         }
       },
-      onerror: (e: any) => {
-        const message = e.message || (e.target instanceof WebSocket ? 'WebSocket connection failed' : 'Unknown voice error');
-        callbacks.onError(message);
-      },
-      onclose: (e: any) => {
-        console.log('Voice session closed', e);
-      },
+      onerror: (e: any) => callbacks.onError(e.message || 'Voice error'),
     },
   });
 
   return {
+    sendText: async (text: string) => {
+      const session = await sessionPromise;
+      session.sendRealtimeInput({ media: [{ text }] });
+    },
     stop: async () => {
-      try {
-        const session = await sessionPromise;
-        session.close();
-      } catch (e) {}
+      const session = await sessionPromise;
+      session.close();
       stream.getTracks().forEach(t => t.stop());
       await inputAudioContext.close();
       await outputAudioContext.close();
