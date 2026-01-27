@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Objective } from '../types';
+import { Objective } from '../types.ts';
 import { Calendar, Target } from 'lucide-react';
 
 interface Props {

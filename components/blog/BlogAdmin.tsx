@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { blogService } from '../../services/blogService';
-import { BlogPost } from '../../types';
+import { blogService } from '../../services/blogService.ts';
+import { BlogPost } from '../../types.ts';
 import { GoogleGenAI } from "@google/genai";
 import { 
   Plus, Edit2, Trash2, X, ArrowLeft, Settings, Layout, Eye, Hash, 

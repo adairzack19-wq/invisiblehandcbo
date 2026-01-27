@@ -1,7 +1,6 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, X, Bot, User, ChevronRight } from 'lucide-react';
-import { askPITAssistant } from '../services/geminiService';
+import { askPITAssistant } from '../services/geminiService.ts';
 
 const AIAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

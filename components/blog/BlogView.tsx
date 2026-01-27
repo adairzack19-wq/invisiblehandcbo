@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
-import { blogService } from '../../services/blogService';
-import { BlogPost } from '../../types';
+import { blogService } from '../../services/blogService.ts';
+import { BlogPost } from '../../types.ts';
 import { Calendar, User, ArrowLeft, Clock, Facebook, Twitter, Linkedin, MessageCircle, Share2 } from 'lucide-react';
 
 const BlogView: React.FC<{ onBack: () => void }> = ({ onBack }) => {

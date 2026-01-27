@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { PROGRAMS, getIcon } from '../constants';
+import { PROGRAMS, getIcon } from '../constants.tsx';
 
 const ProgramSection: React.FC = () => {
   return (

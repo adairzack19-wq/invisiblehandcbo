@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Calendar, MapPin, ArrowRight, Bell } from 'lucide-react';
-import { EVENTS } from '../constants';
+import { EVENTS } from '../constants.tsx';
 
 interface Props {
   onNavigateToBlog: () => void;

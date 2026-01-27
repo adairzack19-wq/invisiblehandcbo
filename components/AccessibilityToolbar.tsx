@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Accessibility, Sun, Moon, Type, Eye, Link, RefreshCcw, Mic, MicOff, Loader2 } from 'lucide-react';
-import { connectVoiceNavigation } from '../services/voiceService';
+import { connectVoiceNavigation } from '../services/voiceService.ts';
 
 interface Props {
   onNavigate: (view: 'home' | 'blog') => void;

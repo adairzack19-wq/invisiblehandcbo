@@ -1,5 +1,4 @@
-
-import { BlogPost } from '../types';
+import { BlogPost } from '../types.ts';
 
 const STORAGE_KEY = 'invisible_hands_blog_posts';
 
