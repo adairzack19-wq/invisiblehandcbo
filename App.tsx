@@ -1,15 +1,14 @@
-
 import React, { useState } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import ObjectiveCard from './components/ObjectiveCard';
-import ProgramSection from './components/ProgramSection';
-import EventsSection from './components/EventsSection';
-import AIAssistant from './components/AIAssistant';
-import AccessibilityToolbar from './components/AccessibilityToolbar';
-import BlogView from './components/blog/BlogView';
-import BlogAdmin from './components/blog/BlogAdmin';
-import { SHORT_TERM_OBJECTIVES, LONG_TERM_OBJECTIVES, MISSION, VISION, PHILOSOPHY } from './constants';
+import Navbar from './components/Navbar.tsx';
+import Hero from './components/Hero.tsx';
+import ObjectiveCard from './components/ObjectiveCard.tsx';
+import ProgramSection from './components/ProgramSection.tsx';
+import EventsSection from './components/EventsSection.tsx';
+import AIAssistant from './components/AIAssistant.tsx';
+import AccessibilityToolbar from './components/AccessibilityToolbar.tsx';
+import BlogView from './components/blog/BlogView.tsx';
+import BlogAdmin from './components/blog/BlogAdmin.tsx';
+import { SHORT_TERM_OBJECTIVES, LONG_TERM_OBJECTIVES, MISSION, VISION, PHILOSOPHY } from './constants.tsx';
 import { Target, Eye, Globe, ShieldCheck, Heart, Mail, Phone, Facebook, Instagram, Twitter, Linkedin, CheckCircle2, Sparkles } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -19,9 +18,13 @@ const App: React.FC = () => {
   const scrollToSection = (id: string) => {
     if (view !== 'home') {
       setView('home');
-      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 100);
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     } else {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      const element = document.getElementById(id);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -71,7 +74,7 @@ const App: React.FC = () => {
               </div>
             </div>
             <div className="aspect-square rounded-[3rem] overflow-hidden border-8 border-white/5">
-              <img src="https://images.unsplash.com/photo-1590650153855-d9e808231d41?q=80&w=800" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+              <img src="https://images.unsplash.com/photo-1590650153855-d9e808231d41?q=80&w=800" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="PWD artisan at work" />
             </div>
           </div>
         </section>
@@ -97,12 +100,12 @@ const App: React.FC = () => {
                 <div className="flex gap-4"><Phone className="text-emerald-400" /> +255 700 000 000</div>
               </address>
             </div>
-            <form className="flex-1 bg-white p-12 rounded-[3rem] text-slate-900">
+            <form className="flex-1 bg-white p-12 rounded-[3rem] text-slate-900" onSubmit={(e) => e.preventDefault()}>
               <div className="space-y-6">
                 <input placeholder="Full Name" className="w-full p-4 bg-slate-50 rounded-xl" />
                 <input placeholder="Email Address" className="w-full p-4 bg-slate-50 rounded-xl" />
                 <textarea rows={4} placeholder="Your Message" className="w-full p-4 bg-slate-50 rounded-xl"></textarea>
-                <button className="w-full bg-emerald-600 text-white p-5 rounded-xl font-bold uppercase tracking-widest">Send Story</button>
+                <button type="submit" className="w-full bg-emerald-600 text-white p-5 rounded-xl font-bold uppercase tracking-widest">Send Story</button>
               </div>
             </form>
           </div>

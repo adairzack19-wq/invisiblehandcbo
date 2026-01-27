@@ -89,7 +89,13 @@ interface VoiceCallbacks {
 }
 
 export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    callbacks.onError("API key is missing. Voice navigation disabled.");
+    throw new Error("API key is missing");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
   
   let nextStartTime = 0;
   const outputAudioContext = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
@@ -122,14 +128,14 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
           const pcmBlob = createBlob(inputData);
           sessionPromise.then(session => {
             session.sendRealtimeInput({ media: pcmBlob });
-          });
+          }).catch(() => {});
         };
         source.connect(scriptProcessor);
         scriptProcessor.connect(inputAudioContext.destination);
       },
       onmessage: async (message: LiveServerMessage) => {
         const parts = message.serverContent?.modelTurn?.parts ?? [];
-        const base64Audio = parts[0]?.inlineData?.data;
+        const base64Audio = parts.find(p => p.inlineData)?.inlineData?.data;
         if (base64Audio) {
           nextStartTime = Math.max(nextStartTime, outputAudioContext.currentTime);
           const audioBuffer = await decodeAudioData(decode(base64Audio), outputAudioContext, 24000, 1);
@@ -154,9 +160,9 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
         for (const fc of functionCalls) {
           let result = "ok";
           const args = (fc.args ?? {}) as any;
-          if (fc.name === 'navigate_to') {
+          if (fc.name === 'navigate_to' && args.view) {
             callbacks.onNavigate(args.view as any);
-          } else if (fc.name === 'scroll_to_section') {
+          } else if (fc.name === 'scroll_to_section' && args.section) {
             callbacks.onScroll(args.section as string);
           }
           

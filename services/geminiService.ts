@@ -1,7 +1,4 @@
-
 import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const SYSTEM_INSTRUCTION = `
 You are the AI Assistant for "The Invisible Hands", a CBO dedicated to empowering adults and youth with disabilities (PWD) in rural Tanzania.
@@ -20,7 +17,14 @@ Tone: Professional, empathetic, hopeful, and informative. Use Swahili greetings 
 `;
 
 export async function askPITAssistant(prompt: string) {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    console.error("Gemini API Key is missing. Please set API_KEY in your environment variables.");
+    return "I'm sorry, I'm currently unable to access my knowledge base because the API key is not configured. Please contact the administrator.";
+  }
+
   try {
+    const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
