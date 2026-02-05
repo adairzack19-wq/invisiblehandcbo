@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from './components/Navbar.tsx';
 import Hero from './components/Hero.tsx';
@@ -116,14 +117,14 @@ const App: React.FC = () => {
             <div>
               <h2 className="text-emerald-400 font-bold uppercase tracking-widest text-sm mb-4">Our Context</h2>
               <h3 className="text-5xl font-bold mb-8">Empowering the <span className="text-emerald-400 italic">Unseen</span>.</h3>
-              <p className="text-slate-400 text-lg mb-10 leading-relaxed">Tanzania's adults with disabilities face a harsh transition into adulthood. We ensure that age means independence, not isolation.</p>
+              <p className="text-slate-400 text-lg mb-10 leading-relaxed">Tanzania's adults with disabilities face a harsh transition into adulthood. Marcus Foundation ensures that age means independence, not isolation.</p>
               <div className="space-y-6">
                 <div className="flex gap-4"><Globe className="text-emerald-400" /> <span>Rural Inclusion in Dodoma and Mbeya</span></div>
                 <div className="flex gap-4"><ShieldCheck className="text-emerald-400" /> <span>Rights-based Advocacy</span></div>
               </div>
             </div>
             <div className="aspect-square rounded-[3rem] overflow-hidden border-8 border-white/5">
-              <img src="https://images.unsplash.com/photo-1590650153855-d9e808231d41?q=80&w=800" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="PWD artisan at work" />
+              <img src="https://images.unsplash.com/photo-1590650153855-d9e808231d41?q=80&w=800" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="PWD artisan at Marcus Foundation" />
             </div>
           </div>
         </section>
@@ -145,7 +146,7 @@ const App: React.FC = () => {
             <div className="flex-1">
               <h3 className="text-5xl font-bold mb-10">Join the <span className="text-emerald-400">Movement</span>.</h3>
               <address className="not-italic space-y-6">
-                <div className="flex gap-4"><Mail className="text-emerald-400" /> info@theinvisiblehands.or.tz</div>
+                <div className="flex gap-4"><Mail className="text-emerald-400" /> info@marcusfoundation.or.tz</div>
                 <div className="flex gap-4"><Phone className="text-emerald-400" /> +255 700 000 000</div>
               </address>
             </div>
@@ -162,7 +163,7 @@ const App: React.FC = () => {
       </main>
 
       <footer className="bg-slate-900 py-12 text-slate-500 text-center uppercase tracking-widest text-[10px] font-bold border-t border-white/5">
-        <p>© 2024 The Invisible Hands CBO. All rights reserved.</p>
+        <p>© 2024 Marcus Foundation. All rights reserved.</p>
       </footer>
       <AIAssistant />
     </div>

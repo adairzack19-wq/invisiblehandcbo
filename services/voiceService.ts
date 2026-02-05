@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, LiveServerMessage, Modality, Type, FunctionDeclaration } from '@google/genai';
 
 // Audio Processing Helpers
@@ -110,7 +111,7 @@ export async function connectVoiceNavigation(callbacks: VoiceCallbacks) {
         voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } },
       },
       tools: [{ functionDeclarations: [navigateToDeclaration, scrollToSectionDeclaration] }],
-      systemInstruction: 'You are the "Inclusive Eyes" voice assistant for The Invisible Hands. You help users with visual, hearing, or physical impairments. When a user hovers over text or asks for information, read it clearly and then ask a brief, relevant follow-up question to keep them engaged hands-free. Be empathetic and patient.',
+      systemInstruction: 'You are the "Inclusive Eyes" voice assistant for the Marcus Foundation. You help users with visual, hearing, or physical impairments. When a user hovers over text or asks for information, read it clearly and then ask a brief, relevant follow-up question to keep them engaged hands-free. Be empathetic and patient. You are a representative of Marcus Foundation.',
     },
     callbacks: {
       onopen: () => {

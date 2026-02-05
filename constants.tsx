@@ -1,11 +1,11 @@
 
 import React from 'react';
 import { Briefcase, Sprout, Globe, Users, ShieldCheck, Scale, Award, Heart, Eye, Target, Compass, Zap, Handshake, Calendar, MapPin } from 'lucide-react';
-import { Objective, Program } from './types';
+import { Objective, Program } from './types.ts';
 
-export const MISSION = "To empower adults and youth with diverse disabilities in rural Tanzania through vocational excellence, economic inclusion, and rights-based advocacy, bridging the gap between education and independent living.";
+export const MISSION = "To empower adults and youth with diverse disabilities in rural Tanzania through vocational excellence, economic inclusion, and rights-based advocacy, bridging the gap between education and independent living, as led by the Marcus Foundation.";
 
-export const VISION = "A Tanzania where every adult with a disability leads a dignified, self-reliant life, fully integrated into the socio-economic fabric of their community.";
+export const VISION = "A Tanzania where every adult with a disability leads a dignified, self-reliant life, fully integrated into the socio-economic fabric of their community through the Marcus Foundation's initiatives.";
 
 export const PHILOSOPHY = [
   {
@@ -63,7 +63,7 @@ export const SHORT_TERM_OBJECTIVES: Objective[] = [
     title: 'Legal & Organizational Setup',
     timeline: 'Month 0 - 6',
     description: 'Establish foundational legal structure and community presence.',
-    metrics: ['Register as NGO with Ministry of Home Affairs', 'Secure hub in rural district (Dodoma/Mbeya)', 'Recruit 5-member core team (50% PWD)'],
+    metrics: ['Register as Marcus Foundation with Ministry of Home Affairs', 'Secure hub in rural district (Dodoma/Mbeya)', 'Recruit 5-member core team (50% PWD)'],
     type: 'short-term'
   },
   {

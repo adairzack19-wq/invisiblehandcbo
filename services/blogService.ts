@@ -1,13 +1,13 @@
 import { BlogPost } from '../types.ts';
 
-const STORAGE_KEY = 'invisible_hands_blog_posts';
+const STORAGE_KEY = 'marcus_foundation_blog_posts';
 
 const DEFAULT_POSTS: BlogPost[] = [
   {
     id: '1',
     title: 'Launching the Empowerment Hub in Dodoma',
-    content: '<p>Today marks a historic milestone for The Invisible Hands as we open our doors in Dodoma. Our focus remains clear: providing adults with disabilities the vocational tools they need to thrive.</p><p>In rural Tanzania, the transition from school to adulthood is often where support systems fail. We are here to bridge that gap.</p>',
-    excerpt: 'Today marks a historic milestone for The Invisible Hands as we open our doors in Dodoma...',
+    content: '<p>Today marks a historic milestone for the Marcus Foundation as we open our doors in Dodoma. Our focus remains clear: providing adults with disabilities the vocational tools they need to thrive.</p><p>In rural Tanzania, the transition from school to adulthood is often where support systems fail. We are here to bridge that gap with specialized training and economic advocacy.</p>',
+    excerpt: 'Today marks a historic milestone for Marcus Foundation as we open our doors in Dodoma...',
     author: 'Admin',
     date: new Date().toLocaleDateString(),
     category: 'Community',

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, X, Bot, User, ChevronRight } from 'lucide-react';
 import { askPITAssistant } from '../services/geminiService.ts';
@@ -5,7 +6,7 @@ import { askPITAssistant } from '../services/geminiService.ts';
 const AIAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{role: 'user' | 'assistant', content: string}[]>([
-    { role: 'assistant', content: 'Habari! I am the assistant for The Invisible Hands. How can I help you understand our mission for PWD empowerment in Tanzania today?' }
+    { role: 'assistant', content: 'Habari! I am the assistant for the Marcus Foundation. How can I help you understand our mission for PWD empowerment in Tanzania today?' }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);

@@ -1,10 +1,11 @@
+
 import { GoogleGenAI } from "@google/genai";
 
 const SYSTEM_INSTRUCTION = `
-You are the AI Assistant for "The Invisible Hands", a CBO dedicated to empowering adults and youth with disabilities (PWD) in rural Tanzania.
+You are the AI Assistant for the "Marcus Foundation", a CBO dedicated to empowering adults and youth with disabilities (PWD) in rural Tanzania.
 Your goal is to inform visitors about the organization's mission, objectives, and the current landscape of disability in Tanzania.
 
-Key Facts about The Invisible Hands:
+Key Facts about Marcus Foundation:
 - Focus: Adult-focused empowerment, economic and vocational skills, rural access.
 - Target: Diverse disabilities including physical, visual, intellectual, albinism, and psychosocial.
 - Short-Term (Years 1-2): Legal setup, needs assessment of 300+ people, pilot training for 100+ adults.
@@ -36,6 +37,6 @@ export async function askPITAssistant(prompt: string) {
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "I'm sorry, I'm having trouble connecting to my knowledge base right now. Please try again or contact us directly at info@theinvisiblehands.or.tz";
+    return "I'm sorry, I'm having trouble connecting to my knowledge base right now. Please try again or contact us directly at info@marcusfoundation.or.tz";
   }
 }

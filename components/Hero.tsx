@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
             </h1>
             
             <p className="text-lg md:text-xl text-slate-600 mb-12 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              The Invisible Hands bridges the gap in Tanzania's disability landscape by focusing on adult economic independence, vocational excellence, and rural inclusion.
+              The Marcus Foundation bridges the gap in Tanzania's disability landscape by focusing on adult economic independence, vocational excellence, and rural inclusion.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-16 justify-center lg:justify-start">
@@ -48,7 +48,7 @@ const Hero: React.FC = () => {
             <div className="relative rounded-[3rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(5,150,105,0.2)] z-10 w-full aspect-square sm:aspect-video lg:aspect-square group">
               <img 
                 src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1200&auto=format&fit=crop" 
-                alt="Empowerment Hub in Tanzania" 
+                alt="Marcus Foundation Empowerment Hub" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/40 to-transparent"></div>

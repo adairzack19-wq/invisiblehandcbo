@@ -55,13 +55,13 @@ const Navbar: React.FC<Props> = ({ onNavigate, activeView }) => {
             className="flex items-center gap-2 cursor-pointer focus:outline-none"
             onClick={() => onNavigate('home')}
             onKeyPress={(e) => e.key === 'Enter' && onNavigate('home')}
-            aria-label="The Invisible Hands - Home"
+            aria-label="Marcus Foundation - Home"
           >
             <div className="bg-emerald-600 p-2 rounded-lg" aria-hidden="true">
               <Heart className="text-white w-6 h-6" />
             </div>
             <span className={`font-heading font-bold text-xl tracking-tight leading-none ${activeView !== 'home' || scrolled ? 'text-emerald-900' : 'text-emerald-900'}`}>
-              The Invisible <span className="text-emerald-600 font-light block sm:inline">Hands</span>
+              Marcus <span className="text-emerald-600 font-light block sm:inline">Foundation</span>
             </span>
           </div>
 

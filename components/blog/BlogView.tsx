@@ -14,7 +14,7 @@ const BlogView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const sharePost = (platform: string) => {
     if (!selectedPost) return;
     const url = window.location.href;
-    const text = `Read "${selectedPost.title}" by The Invisible Hands`;
+    const text = `Read "${selectedPost.title}" by Marcus Foundation`;
     
     let shareUrl = '';
     switch (platform) {
@@ -42,7 +42,7 @@ const BlogView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             onClick={() => setSelectedPost(null)}
             className="flex items-center gap-2 text-emerald-600 font-bold mb-8 hover:-translate-x-1 transition-transform"
           >
-            <ArrowLeft className="w-5 h-5" /> Back to Blog
+            <ArrowLeft className="w-5 h-5" /> Back to Journal
           </button>
           
           <img 
@@ -65,7 +65,6 @@ const BlogView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             dangerouslySetInnerHTML={{ __html: selectedPost.content }}
           />
 
-          {/* Social Share Section */}
           <div className="border-t border-slate-100 pt-10 mt-16">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div className="flex items-center gap-3">
@@ -75,34 +74,10 @@ const BlogView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 <span className="font-bold text-slate-900 uppercase tracking-widest text-xs">Share this story</span>
               </div>
               <div className="flex items-center gap-3">
-                <button 
-                  onClick={() => sharePost('facebook')}
-                  className="bg-slate-50 text-slate-400 hover:bg-blue-600 hover:text-white p-3 rounded-2xl transition-all duration-300"
-                  aria-label="Share on Facebook"
-                >
-                  <Facebook className="w-5 h-5" />
-                </button>
-                <button 
-                  onClick={() => sharePost('twitter')}
-                  className="bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white p-3 rounded-2xl transition-all duration-300"
-                  aria-label="Share on X (Twitter)"
-                >
-                  <Twitter className="w-5 h-5" />
-                </button>
-                <button 
-                  onClick={() => sharePost('linkedin')}
-                  className="bg-slate-50 text-slate-400 hover:bg-blue-700 hover:text-white p-3 rounded-2xl transition-all duration-300"
-                  aria-label="Share on LinkedIn"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </button>
-                <button 
-                  onClick={() => sharePost('whatsapp')}
-                  className="bg-slate-50 text-slate-400 hover:bg-emerald-500 hover:text-white p-3 rounded-2xl transition-all duration-300"
-                  aria-label="Share on WhatsApp"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                </button>
+                <button onClick={() => sharePost('facebook')} className="bg-slate-50 text-slate-400 hover:bg-blue-600 hover:text-white p-3 rounded-2xl transition-all duration-300"><Facebook className="w-5 h-5" /></button>
+                <button onClick={() => sharePost('twitter')} className="bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white p-3 rounded-2xl transition-all duration-300"><Twitter className="w-5 h-5" /></button>
+                <button onClick={() => sharePost('linkedin')} className="bg-slate-50 text-slate-400 hover:bg-blue-700 hover:text-white p-3 rounded-2xl transition-all duration-300"><Linkedin className="w-5 h-5" /></button>
+                <button onClick={() => sharePost('whatsapp')} className="bg-slate-50 text-slate-400 hover:bg-emerald-500 hover:text-white p-3 rounded-2xl transition-all duration-300"><MessageCircle className="w-5 h-5" /></button>
               </div>
             </div>
           </div>
@@ -116,12 +91,12 @@ const BlogView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-end mb-16">
           <div>
-            <h2 className="text-emerald-600 font-bold tracking-widest text-sm uppercase mb-3">Our Journal</h2>
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-slate-900">Voices of Empowerment</h1>
+            <h2 className="text-emerald-600 font-bold tracking-widest text-sm uppercase mb-3 text-center md:text-left">Marcus Foundation Journal</h2>
+            <h1 className="text-4xl md:text-5xl font-heading font-bold text-slate-900 text-center md:text-left">Voices of Empowerment</h1>
           </div>
           <button 
             onClick={onBack}
-            className="text-slate-500 font-bold flex items-center gap-2 hover:text-emerald-600 transition-colors"
+            className="hidden md:flex text-slate-500 font-bold items-center gap-2 hover:text-emerald-600 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" /> Back Home
           </button>
